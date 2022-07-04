@@ -1,0 +1,254 @@
+﻿@model ClienteModel
+@{
+    ViewData["Title"] = "Cadastrar Cliente";
+}
+
+<div class="text-center"> 
+    
+    <h1 class="display-5">Cadastrar Cliente</h1>        
+
+</div>
+
+<form asp-controller="Cliente" asp-action="Criar" method="post">
+
+    <h1 class="display-10">Cliente</h1>
+        
+      <div class="row">
+        <div class="col-md-2">
+            <label for="cpf">CPF *</label>
+          <input type="text" asp-for="CPF" class="form-control" required>
+        </div>
+        <div class="col-md-8">
+            <label for="rg">Nome *</label>
+          <input type="text" asp-for="Nome" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <label for="cpf">RG</label>
+          <input type="text" asp-for="RG" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label for="rg">Data Expedição</label>
+          <input type="text" asp-for="DataExp" class="form-control">
+        </div>        
+        <div class="form-group col-md-2">
+          <label for="orgexp">Órgão Expedição</label>
+          <select class="form-control" asp-for="OrgExp">
+            <option selected></option>
+            <option>SSP</option>
+            <option>POM</option>
+            <option>SPTC</option>
+            <option>DPF</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="ufexp">UF Expedição</label>
+          <select class="form-control" asp-for="UfExp">
+            <option selected></option>
+            <option>AC</option>
+            <option>AL</option>
+            <option>AP</option>
+            <option>AM</option>
+            <option>BA</option>
+            <option>CE</option>
+            <option>DF</option>
+            <option>ES</option>
+            <option>GO</option>
+            <option>MA</option>
+            <option>MT</option>
+            <option>MS</option>
+            <option>MG</option>
+            <option>PA</option>
+            <option>PB</option>
+            <option>PR</option>
+            <option>PE</option>
+            <option>PI</option>
+            <option>RJ</option>
+            <option>RN</option>
+            <option>RS</option>
+            <option>RO</option>
+            <option>RR</option>
+            <option>SC</option>
+            <option>SP</option>
+            <option>SE</option>
+            <option>TO</option>
+          </select>
+        </div>      
+      </div>
+      <div class="row">
+          <div class="col-md-4">
+                <label for="nascimento">Data de Nascimento *</label>
+              <input type="text" asp-for="Nascimento" class="form-control" required>
+          </div>
+          <div class="form-group col-md-3">
+             <label for="sexo">Sexo *</label>
+             <select class="form-control" asp-for="Sexo" required>
+                <option selected></option>
+                <option>Masculino</option>
+                <option>Feminino</option>
+                <option>Prefiro não informar</option>
+             </select>
+            </div>
+          <div class="form-group col-md-3">
+             <label for="estcivil">Estado Civil *</label>
+             <select class="form-control" asp-for="EstCivil" required>
+                <option selected></option>
+                <option>Solteiro</option>
+                <option>Casado</option>
+                <option>Divorciado</option>
+             </select>
+          </div>
+        </div>
+
+      <br />
+      
+      <h1 class="display-10">Endereço</h1>
+
+      <div class="row">
+        <div class="col-md-2">
+            <div class="form-outline">
+              <label for="cep">CEP *</label>
+              <input class="form-control" asp-for="CEP" name="cep" type="text" id="cep" value="" onblur="pesquisacep(this.value);" required/>
+              
+            </div>              
+        </div>
+        <div class="col-md-2">
+            <label for="rua">Rua *</label>
+          <input type="text" asp-for="Rua" class="form-control" id="rua" required>
+        </div>
+        <div class="col-md-1">
+            <label for="numero">Num. *</label>
+          <input type="text" asp-for="Numero" class="form-control" required>
+        </div>
+        <div class="col-md-2">
+            <label for="complemento">Complemento</label>
+          <input type="text" asp-for="Complemento" class="form-control">
+        </div>
+        <div class="col-md-2">
+            <label for="bairro">Bairro *</label>
+          <input type="text" asp-for="Bairro" class="form-control" id="bairro" required>
+        </div>
+        <div class="col-md-2">
+            <label for="cidade">Cidade *</label>
+          <input type="text" asp-for="Cidade" class="form-control" id="cidade" required>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="uf">UF *</label>
+          <select class="form-control" asp-for="UF" id="uf" required>
+            <option selected></option>
+            <option>AC</option>
+            <option>AL</option>
+            <option>AP</option>
+            <option>AM</option>
+            <option>BA</option>
+            <option>CE</option>
+            <option>DF</option>
+            <option>ES</option>
+            <option>GO</option>
+            <option>MA</option>
+            <option>MT</option>
+            <option>MS</option>
+            <option>MG</option>
+            <option>PA</option>
+            <option>PB</option>
+            <option>PR</option>
+            <option>PE</option>
+            <option>PI</option>
+            <option>RJ</option>
+            <option>RN</option>
+            <option>RS</option>
+            <option>RO</option>
+            <option>RR</option>
+            <option>SC</option>
+            <option>SP</option>
+            <option>SE</option>
+            <option>TO</option>
+          </select>
+        </div>      
+      </div>
+    
+      <br /> <br />
+      
+ <!--Validador de CEP -->
+  <script>
+    
+    function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('cidade').value=(conteudo.localidade);
+            document.getElementById('uf').value=(conteudo.uf);
+            
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+                
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    };
+
+  </script>
+ <!--Fim do Validador CEP-->   
+    
+    
+
+      
+      <button class="btn btn-primary btn-block" type="submit">Adicionar</button>
+      <a class="btn btn-secondary btn-block" asp-controller="Cliente" asp-action="Index" role="button">Voltar</a>      
+      
+</form>
