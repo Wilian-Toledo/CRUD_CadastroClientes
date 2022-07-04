@@ -17,6 +17,11 @@ namespace CadastroClientes.Repositorio
             return _bancoContext.Clientes.FirstOrDefault(x => x.Id == id);
         }
 
+        public ClienteModel Pesquisar(int id)
+        {
+            return _bancoContext.Clientes.FirstOrDefault(x => x.Id == id);
+        }
+
         public List<ClienteModel> BuscarTodos()
         {
             return _bancoContext.Clientes.ToList();
@@ -70,5 +75,7 @@ namespace CadastroClientes.Repositorio
 
             return true;
         }
+
+       
     }
 }
