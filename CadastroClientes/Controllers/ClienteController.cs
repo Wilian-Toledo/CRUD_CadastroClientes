@@ -40,27 +40,67 @@ namespace CadastroClientes.Controllers
 
         public IActionResult Apagar(int id)
         {
-            _clienteRepositorio.Apagar(id);
-            return RedirectToAction("Index");
+            try
+            {
+                bool apagado = _clienteRepositorio.Apagar(id);
+
+                if (apagado)
+                {
+                    TempData["MensagemSucesso"] = "Cliente apagado com sucesso!";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Ops, não conseguimos apagar seu cliente!";
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos apagar seu cliente, tente novamente, detalhe do erro: {erro.Message}";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Criar(ClienteModel cliente)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _clienteRepositorio.Adicionar(cliente);
+                if (ModelState.IsValid)
+                {
+                    _clienteRepositorio.Adicionar(cliente);
+                    TempData["MensagemSucesso"] = "Cliente cadastrado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+
+                return View(cliente);
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar seu cliente, tente novamente, detalhe do erro: {erro.Message}";
                 return RedirectToAction("Index");
-            }      
-            
-            return View(cliente);
+            }
         }
 
         [HttpPost]
         public IActionResult Alterar(ClienteModel cliente)
         {
-            _clienteRepositorio.Atualizar(cliente);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _clienteRepositorio.Atualizar(cliente);
+                    TempData["MensagemSucesso"] = "Cliente alterado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+                return View("Editar", cliente);
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos atualizar seu cliente, tente novamente, detalhe do erro: {erro.Message}";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
