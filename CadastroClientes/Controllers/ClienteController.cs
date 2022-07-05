@@ -1,7 +1,9 @@
 ﻿using CadastroClientes.Models;
 using CadastroClientes.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CadastroClientes.Controllers
 {   
@@ -12,6 +14,7 @@ namespace CadastroClientes.Controllers
         {
             _clienteRepositorio = clienteRepositorio;
         }
+
         public IActionResult Index()
         {
             List<ClienteModel> clientes = _clienteRepositorio.BuscarTodos();
@@ -44,8 +47,13 @@ namespace CadastroClientes.Controllers
         [HttpPost]
         public IActionResult Criar(ClienteModel cliente)
         {
-            _clienteRepositorio.Adicionar(cliente);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _clienteRepositorio.Adicionar(cliente);
+                return RedirectToAction("Index");
+            }      
+            
+            return View(cliente);
         }
 
         [HttpPost]
